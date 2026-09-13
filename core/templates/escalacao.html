@@ -1,5 +1,5 @@
 {% extends "base.html" %}{% load static %}
-{% block titulo %}Meu time — Cartola Náutico{% endblock %}
+{% block titulo %}Meu time — Cartola do Portal{% endblock %}
 {% block conteudo %}
 
 {% if not rodada %}
@@ -59,8 +59,8 @@
   <ul id="lista-jogadores" class="lista-jogadores"></ul>
 </dialog>
 
-{{ jogadores_json|json_script:"dados-jogadores" }}
-{{ escalados_json|json_script:"dados-escalados" }}
+{{ dados_jogadores|json_script:"dados-jogadores" }}
+{{ dados_escalados|json_script:"dados-escalados" }}
 {% endif %}
 {% endblock %}
 

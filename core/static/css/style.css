@@ -237,13 +237,6 @@ summary {
     ),
     var(--vermelho);
 }
-.campo::after {
-  content: "";
-  position: absolute;
-  inset: 22% 12% auto;
-  height: 0;
-  border-top: 2px solid rgba(255, 255, 255, 0.5);
-}
 .linha { display: flex; justify-content: center; gap: clamp(1rem, 8vw, 4rem); }
 
 .vaga {

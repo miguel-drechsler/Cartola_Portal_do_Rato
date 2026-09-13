@@ -5,8 +5,8 @@ from . import mercado
 from .models import Escalacao, Jogador, Perfil, Rodada, Scout
 from .services import api_football, importacao
 
-admin.site.site_header = "Cartola Náutico"
-admin.site.site_title = "Cartola Náutico"
+admin.site.site_header = "Cartola do Portal"
+admin.site.site_title = "Cartola do Portal"
 admin.site.index_title = "Administração do jogo"
 
 

@@ -1,4 +1,3 @@
-import json
 from decimal import Decimal
 
 from django.contrib import messages
@@ -23,7 +22,7 @@ def cadastro(request):
     if request.method == "POST" and formulario.is_valid():
         usuario = formulario.save()
         login(request, usuario)
-        messages.success(request, "Conta criada. Bem-vindo ao Cartola Náutico!")
+        messages.success(request, "Conta criada. Bem-vindo ao Cartola do Portal!")
         return redirect("escalacao")
     return render(request, "cadastro.html", {"formulario": formulario})
 
@@ -64,8 +63,8 @@ def escalacao(request):
         "rodada": rodada,
         "perfil": perfil,
         "patrimonio": perfil.patrimonio(rodada),
-        "jogadores_json": json.dumps(jogadores),
-        "escalados_json": json.dumps([j.id for j in escalados]),
+        "dados_jogadores": jogadores,
+        "dados_escalados": [j.id for j in escalados],
         "mercado_aberto": rodada.mercado_aberto if rodada else False,
     }
     return render(request, "escalacao.html", contexto)

@@ -3,7 +3,7 @@
 <head>
 <meta charset="utf-8">
 <meta name="viewport" content="width=device-width, initial-scale=1">
-<title>{% block titulo %}Cartola Náutico{% endblock %}</title>
+<title>{% block titulo %}Cartola do Portal{% endblock %}</title>
 <link rel="preconnect" href="https://fonts.googleapis.com">
 <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
 <link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
@@ -16,7 +16,7 @@
 <header class="topo">
   <a class="marca" href="{% url 'home' %}">
     <img src="{% static 'img/logo-portal-do-rato.png' %}" alt="Portal do Rato" width="44" height="44">
-    <span>Cartola Náutico</span>
+    <span>Cartola do Portal</span>
   </a>
   <nav class="menu">
     <a href="{% url 'ranking' %}">Ranking</a>
@@ -41,7 +41,7 @@
 <main id="conteudo">{% block conteudo %}{% endblock %}</main>
 
 <footer class="rodape">
-  <p>Cartola Náutico — o Cartola 100% alvirrubro, do Portal do Rato.</p>
+  <p>Cartola do Portal — o Cartola 100% alvirrubro, do Portal do Rato.</p>
   <p class="miudo">Jogo de torcedor, sem vínculo oficial com o Clube Náutico Capibaribe.</p>
 </footer>
 {% block scripts %}{% endblock %}
