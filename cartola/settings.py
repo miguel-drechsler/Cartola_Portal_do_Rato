@@ -4,6 +4,15 @@ from pathlib import Path
 
 BASE_DIR = Path(__file__).resolve().parent.parent
 
+# Le o arquivo .env, se existir. E onde ficam a chave secreta e a chave da API,
+# fora do codigo e fora do GitHub. Sem o arquivo, tudo continua funcionando.
+try:
+    from dotenv import load_dotenv  # type: ignore[reportMissingImports]
+
+    load_dotenv(BASE_DIR / ".env")
+except ImportError:
+    pass
+
 # Em producao, defina DJANGO_SECRET_KEY como variavel de ambiente.
 SECRET_KEY = os.environ.get("DJANGO_SECRET_KEY", "troque-esta-chave-antes-de-publicar")
 DEBUG = os.environ.get("DJANGO_DEBUG", "1") == "1"
