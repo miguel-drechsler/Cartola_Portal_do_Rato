@@ -143,3 +143,8 @@ def gols_sofridos(dados_da_partida, id_do_time):
     em_casa = dados_da_partida["teams"]["home"]["id"] == id_do_time
     sofridos = gols["away"] if em_casa else gols["home"]
     return None if sofridos is None else int(sofridos)
+
+
+def situacao_da_conta():
+    """Plano atual e requisicoes restantes no dia."""
+    return chamar("status")

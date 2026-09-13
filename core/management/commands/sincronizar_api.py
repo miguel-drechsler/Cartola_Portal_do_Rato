@@ -3,10 +3,13 @@
     python manage.py sincronizar_api elenco     # liga cada jogador ao ID da API
     python manage.py sincronizar_api rodada     # cria/atualiza a rodada do proximo jogo
     python manage.py sincronizar_api scouts     # traz os scouts da ultima rodada com ID
+    python manage.py sincronizar_api diagnostico  # mostra o que falta para automatizar
 """
 from django.core.management.base import BaseCommand, CommandError
 
-from core.models import Rodada
+from django.conf import settings
+
+from core.models import Jogador, Rodada
 from core.services import api_football, importacao
 
 
@@ -14,7 +17,9 @@ class Command(BaseCommand):
     help = "Sincroniza elenco, rodada e scouts com a API-Football."
 
     def add_arguments(self, parser):
-        parser.add_argument("acao", choices=["elenco", "rodada", "scouts"])
+        parser.add_argument(
+            "acao", choices=["elenco", "rodada", "scouts", "diagnostico"]
+        )
         parser.add_argument(
             "--rodada", type=int, help="Número da rodada (padrão: a rodada atual)"
         )
@@ -24,6 +29,71 @@ class Command(BaseCommand):
             getattr(self, f"acao_{opcoes['acao']}")(opcoes)
         except (importacao.ErroDeImportacao, api_football.ErroDaApi) as erro:
             raise CommandError(str(erro))
+
+    def item(self, pronto, texto, ajuda=""):
+        marca = "[ok]" if pronto else "[falta]"
+        estilo = self.style.SUCCESS if pronto else self.style.WARNING
+        self.stdout.write(estilo(f"{marca} {texto}"))
+        if ajuda and not pronto:
+            self.stdout.write(f"       {ajuda}")
+
+    def acao_diagnostico(self, opcoes):
+        chave = bool(settings.API_FOOTBALL_KEY)
+        self.item(
+            chave,
+            "Chave da API configurada",
+            "Pegue em Account > My Access no dashboard e ponha no .env, "
+            "na linha API_FOOTBALL_KEY.",
+        )
+
+        time = bool(getattr(settings, "API_FOOTBALL_TEAM_ID", ""))
+        self.item(
+            time,
+            "ID do Náutico configurado",
+            "Pegue em Apis > Football > Ids > Teams e ponha no .env, "
+            "na linha API_FOOTBALL_TEAM_ID.",
+        )
+
+        elenco = Jogador.objects.filter(no_elenco=True)
+        vinculados = elenco.exclude(api_id=None).count()
+        total = elenco.count()
+        self.item(
+            total > 0 and vinculados == total,
+            f"Jogadores vinculados à API: {vinculados} de {total}",
+            "Rode: python manage.py sincronizar_api elenco",
+        )
+
+        rodada = Rodada.atual()
+        if rodada is None:
+            self.item(False, "Rodada aberta", "Rode: python manage.py sincronizar_api rodada")
+        else:
+            self.item(
+                bool(rodada.api_fixture_id),
+                f"Rodada {rodada.numero} com ID da partida",
+                "Rode: python manage.py sincronizar_api rodada",
+            )
+
+        if not chave:
+            self.stdout.write(
+                "\nSem a chave, o jogo funciona normalmente: "
+                "você cria a rodada e preenche os scouts pelo admin."
+            )
+            return
+
+        try:
+            situacao = api_football.situacao_da_conta()
+        except api_football.ErroDaApi as erro:
+            self.item(False, f"Conexão com a API: {erro}")
+            return
+
+        conta = situacao.get("subscription", {})
+        pedidos = situacao.get("requests", {})
+        self.item(
+            True,
+            f"Conexão com a API: plano {conta.get('plan', '?')}, "
+            f"{pedidos.get('current', '?')} de {pedidos.get('limit_day', '?')} "
+            "requisições usadas hoje",
+        )
 
     def acao_elenco(self, opcoes):
         vinculados, faltando = importacao.vincular_elenco()
