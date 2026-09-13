@@ -1,4 +1,4 @@
-# Cartola Náutico — Portal do Rato
+# Cartola Náutico — Portal do Rato (Em desenvolvimento)
 
 Jogo de fantasy do Náutico: 6 jogadores, 30 Portal Coins iniciais, valorização por rodada
 e ranking geral. Feito em Django, com telas em HTML, CSS e JavaScript puro.
