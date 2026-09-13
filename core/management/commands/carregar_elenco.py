@@ -14,7 +14,7 @@ ELENCO = [
     ("Léo Índio", "DEF", "6"),
     ("Gustavo Henrique", "DEF", "3"),
     ("Wanderson", "DEF", "2"),
-    ("Matheus Silva", "DEF", "2"),
+    ("Mateus Silva", "DEF", "2"),
     ("Igor Fernandes", "DEF", "5"),
     ("Ryan", "DEF", "3"),
     ("Riquelme", "DEF", "1"),
