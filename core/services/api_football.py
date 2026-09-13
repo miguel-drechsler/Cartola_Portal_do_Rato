@@ -125,16 +125,70 @@ def scouts_da_partida(id_da_partida, id_do_time):
     return resultado
 
 
-def proximo_jogo(id_do_time):
-    """Proxima partida do time, com ID, data e adversario."""
-    resposta = chamar("fixtures", team=id_do_time, next=1, timezone="America/Recife")
-    return resposta[0] if resposta else None
+FUSO = "America/Recife"
+AINDA_NAO_COMECOU = {"NS", "TBD", "PST"}
 
 
-def partida(id_da_partida):
+def erro_de_plano(erro):
+    """O plano gratuito recusa alguns parametros, como next e last."""
+    texto = str(erro).lower()
+    return "plan" in texto or "subscription" in texto
+
+
+def temporada_atual():
+    from django.utils import timezone
+
+    return timezone.now().year
+
+
+def jogos_da_temporada(id_do_time, temporada=None):
+    """Todas as partidas do time na temporada. Uma requisicao so."""
+    return chamar(
+        "fixtures",
+        team=id_do_time,
+        season=temporada or temporada_atual(),
+        timezone=FUSO,
+    )
+
+
+def proximo_jogo(id_do_time, temporada=None):
+    """Proxima partida do time, com ID, data e adversario.
+
+    Tenta o atalho next=1 e, se o plano nao liberar, busca a temporada
+    inteira e escolhe o primeiro jogo que ainda nao comecou.
+    """
+    try:
+        resposta = chamar("fixtures", team=id_do_time, next=1, timezone=FUSO)
+        if resposta:
+            return resposta[0]
+    except ErroDaApi as erro:
+        if not erro_de_plano(erro):
+            raise
+
+    futuros = [
+        jogo
+        for jogo in jogos_da_temporada(id_do_time, temporada)
+        if ((jogo["fixture"].get("status") or {}).get("short") in AINDA_NAO_COMECOU)
+    ]
+    futuros.sort(key=lambda jogo: jogo["fixture"]["date"])
+    return futuros[0] if futuros else None
+
+
+def partida(id_da_partida, id_do_time=None, temporada=None):
     """Dados de uma partida especifica, incluindo o placar."""
-    resposta = chamar("fixtures", id=id_da_partida, timezone="America/Recife")
-    return resposta[0] if resposta else None
+    try:
+        resposta = chamar("fixtures", id=id_da_partida, timezone=FUSO)
+        if resposta:
+            return resposta[0]
+    except ErroDaApi as erro:
+        if not erro_de_plano(erro):
+            raise
+
+    if id_do_time:
+        for jogo in jogos_da_temporada(id_do_time, temporada):
+            if jogo["fixture"]["id"] == id_da_partida:
+                return jogo
+    return None
 
 
 def gols_sofridos(dados_da_partida, id_do_time):

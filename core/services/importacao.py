@@ -95,16 +95,34 @@ def sincronizar_proxima_rodada():
     em_casa = times["home"]["id"] == time
     adversario = times["away"]["name"] if em_casa else times["home"]["name"]
 
-    rodada, criada = Rodada.objects.update_or_create(
-        api_fixture_id=partida["id"],
-        defaults={
-            "numero": numero_da_rodada(dados),
-            "adversario": adversario,
-            "mando": "casa" if em_casa else "fora",
-            "data_jogo": parse_datetime(partida["date"]),
-        },
+    numero = numero_da_rodada(dados)
+    campos = {
+        "adversario": adversario,
+        "mando": "casa" if em_casa else "fora",
+        "data_jogo": parse_datetime(partida["date"]),
+        "api_fixture_id": partida["id"],
+    }
+
+    # Aproveita a rodada que ja existe: primeiro pelo ID da partida, depois
+    # pelo numero. Assim, uma rodada criada a mao no admin e completada em vez
+    # de virar uma segunda rodada com o mesmo numero.
+    rodada = (
+        Rodada.objects.filter(api_fixture_id=partida["id"]).first()
+        or Rodada.objects.filter(numero=numero).first()
     )
-    return rodada, criada
+    if rodada is None:
+        rodada = Rodada.objects.create(numero=numero, **campos)
+        return rodada, True
+
+    if rodada.processada:
+        raise ErroDeImportacao(
+            f"A rodada {rodada.numero} já foi processada e não pode ser alterada."
+        )
+    for campo, valor in campos.items():
+        setattr(rodada, campo, valor)
+    rodada.numero = numero
+    rodada.save()
+    return rodada, False
 
 
 @transaction.atomic
@@ -153,7 +171,7 @@ def importar_scouts(rodada):
         scout.save()
         preenchidos.append(jogador.nome)
 
-    partida = api_football.partida(rodada.api_fixture_id)
+    partida = api_football.partida(rodada.api_fixture_id, id_do_time=time)
     if partida:
         sofridos = api_football.gols_sofridos(partida, time)
         if sofridos is not None:

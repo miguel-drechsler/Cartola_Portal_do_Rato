@@ -119,22 +119,59 @@ class RodadaAdmin(admin.ModelAdmin):
 
 @admin.register(Scout)
 class ScoutAdmin(admin.ModelAdmin):
+    """Uma linha por jogador, todos os números na mesma tela.
+
+    Filtre pela rodada, preencha e clique em Salvar uma vez só no fim da página.
+    Pênaltis e expulsões ficam na ficha individual, por serem raros.
+    """
+
     list_display = (
-        "jogador",
-        "rodada",
+        "nome_do_jogador",
         "entrou_em_campo",
         "gols",
         "assistencias",
         "desarmes",
         "finalizacoes_no_gol",
+        "finalizacoes_na_trave",
+        "finalizacoes_fora",
+        "dribles",
+        "faltas_sofridas",
+        "faltas_cometidas",
         "cartoes_amarelos",
+        "defesas_dentro_area",
+        "defesas_fora_area",
         "conferido",
         "pontos",
     )
-    list_filter = ("rodada", "conferido", "entrou_em_campo", "jogador__posicao")
-    list_editable = ("entrou_em_campo", "gols", "assistencias", "desarmes", "conferido")
+    list_editable = (
+        "entrou_em_campo",
+        "gols",
+        "assistencias",
+        "desarmes",
+        "finalizacoes_no_gol",
+        "finalizacoes_na_trave",
+        "finalizacoes_fora",
+        "dribles",
+        "faltas_sofridas",
+        "faltas_cometidas",
+        "cartoes_amarelos",
+        "defesas_dentro_area",
+        "defesas_fora_area",
+        "conferido",
+    )
+    list_filter = ("rodada", "jogador__posicao", "entrou_em_campo", "conferido")
+    list_per_page = 40
+    ordering = ("jogador__posicao", "jogador__nome")
     search_fields = ("jogador__nome",)
     autocomplete_fields = ("jogador",)
+    list_display_links = ("nome_do_jogador",)
+
+    def get_queryset(self, request):
+        return super().get_queryset(request).select_related("jogador", "rodada")
+
+    @admin.display(description="jogador", ordering="jogador__nome")
+    def nome_do_jogador(self, scout):
+        return f"{scout.jogador.get_posicao_display()[:3].upper()} · {scout.jogador.nome}"
 
     @admin.display(description="pontos")
     def pontos(self, scout):

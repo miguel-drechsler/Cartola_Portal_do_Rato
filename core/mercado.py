@@ -152,12 +152,18 @@ def criar_fichas_de_scout(rodada):
 
 
 def ranking_geral():
-    return Perfil.objects.select_related("usuario").order_by("-pontos_total", "usuario__username")
+    """Contas de administrador ficam de fora: quem organiza não disputa."""
+    return (
+        Perfil.objects.select_related("usuario")
+        .exclude(usuario__is_staff=True)
+        .order_by("-pontos_total", "usuario__username")
+    )
 
 
 def ranking_da_rodada(rodada):
     return (
         rodada.escalacoes.select_related("usuario__perfil")
+        .exclude(usuario__is_staff=True)
         .order_by("-pontos", "usuario__username")
     )
 
