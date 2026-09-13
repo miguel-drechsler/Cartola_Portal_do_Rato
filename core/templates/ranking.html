@@ -1,0 +1,39 @@
+{% extends "base.html" %}
+{% block titulo %}Ranking — Cartola Náutico{% endblock %}
+{% block conteudo %}
+<section class="ranking">
+  <h1>Ranking geral</h1>
+  {% if geral %}
+  <table class="tabela-ranking">
+    <thead><tr><th>Posição</th><th>Time</th><th>Pontos</th></tr></thead>
+    <tbody>
+      {% for posicao, perfil in geral %}
+      <tr {% if perfil.usuario == user %}class="eu"{% endif %}>
+        <td class="posicao">{{ posicao }}</td>
+        <td>{{ perfil.time_nome|default:perfil.usuario.username }}</td>
+        <td class="pontos">{{ perfil.pontos_total|floatformat:2 }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% else %}
+  <p class="vazio">O ranking aparece aqui depois da primeira rodada processada.</p>
+  {% endif %}
+
+  {% if da_rodada %}
+  <h2>Rodada {{ rodada_processada.numero }}</h2>
+  <table class="tabela-ranking">
+    <thead><tr><th>Posição</th><th>Time</th><th>Pontos</th></tr></thead>
+    <tbody>
+      {% for posicao, escalacao in da_rodada %}
+      <tr {% if escalacao.usuario == user %}class="eu"{% endif %}>
+        <td class="posicao">{{ posicao }}</td>
+        <td>{{ escalacao.usuario.perfil.time_nome|default:escalacao.usuario.username }}</td>
+        <td class="pontos">{{ escalacao.pontos|floatformat:2 }}</td>
+      </tr>
+      {% endfor %}
+    </tbody>
+  </table>
+  {% endif %}
+</section>
+{% endblock %}

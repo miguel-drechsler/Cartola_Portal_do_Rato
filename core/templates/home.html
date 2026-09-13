@@ -1,0 +1,90 @@
+{% extends "base.html" %}{% load static %}
+{% block conteudo %}
+
+<section class="capa">
+  <div class="capa-texto">
+    <h1>Monte seu Timbu e dispute a rodada</h1>
+    <p class="linha-fina">Seis jogadores do Náutico, 30 Portal Coins e um ranking que segue até o fim da temporada.</p>
+    <div class="capa-acoes">
+      {% if user.is_authenticated %}
+        <a class="botao" href="{% url 'escalacao' %}">Escalar meu time</a>
+      {% else %}
+        <a class="botao" href="{% url 'cadastro' %}">Criar conta</a>
+        <a class="botao botao-vazado" href="{% url 'login' %}">Entrar</a>
+      {% endif %}
+    </div>
+    {% if rodada %}
+    <p class="proxima-rodada">
+      Rodada {{ rodada.numero }} · Náutico x {{ rodada.adversario }} ·
+      {% if rodada.mercado_aberto %}mercado aberto até {{ rodada.fechamento_mercado|date:"d/m \à\s H:i" }}
+      {% else %}mercado fechado{% endif %}
+    </p>
+    {% endif %}
+  </div>
+  <img class="capa-escudo" src="{% static 'img/logo-portal-do-rato.png' %}" alt="Portal do Rato" width="260" height="260">
+</section>
+
+<section class="regras">
+  <h2>Como funciona</h2>
+
+  <div class="regras-resumo">
+    <div><strong>6 jogadores</strong><span>1 goleiro, 2 defensores, 1 meio-campista e 2 atacantes</span></div>
+    <div><strong>30 Portal Coins</strong><span>seu orçamento inicial para montar o time</span></div>
+    <div><strong>24 horas antes</strong><span>o mercado fecha antes de cada jogo</span></div>
+    <div><strong>1 a 12 PC</strong><span>limites de valor de cada jogador</span></div>
+  </div>
+
+  <details open>
+    <summary>Pontuação</summary>
+    <table class="tabela-pontos">
+      <caption>Vale para qualquer jogador escalado</caption>
+      <tbody>
+        <tr><td>Gol</td><td>+8,0</td></tr>
+        <tr><td>Assistência</td><td>+5,0</td></tr>
+        <tr><td>Desarme ou interceptação</td><td>+1,0</td></tr>
+        <tr><td>Finalização no gol</td><td>+0,5</td></tr>
+        <tr><td>Drible</td><td>+0,5</td></tr>
+        <tr><td>Bola na trave</td><td>+0,3</td></tr>
+        <tr><td>Finalização para fora ou bloqueada</td><td>+0,1</td></tr>
+        <tr><td>Falta sofrida</td><td>+0,1</td></tr>
+        <tr><td>Pênalti sofrido</td><td>+3,0</td></tr>
+        <tr><td>Falta cometida</td><td class="negativo">−0,2</td></tr>
+        <tr><td>Cartão amarelo</td><td class="negativo">−1,0</td></tr>
+        <tr><td>Cartão vermelho direto</td><td class="negativo">−2,0</td></tr>
+        <tr><td>Expulso por dois amarelos, ou amarelo e vermelho</td><td class="negativo">−3,0 no total</td></tr>
+        <tr><td>Pênalti cometido</td><td class="negativo">−3,0</td></tr>
+        <tr><td>Pênalti perdido</td><td class="negativo">−3,0</td></tr>
+        <tr><td>Gol contra</td><td class="negativo">−3,0</td></tr>
+      </tbody>
+    </table>
+    <p>Cada finalização conta em uma categoria só. O gol soma +8,0 e mais os +0,5 da finalização que o originou.</p>
+  </details>
+
+  <details>
+    <summary>Goleiros e clean sheet</summary>
+    <table class="tabela-pontos">
+      <tbody>
+        <tr><td>Defesa de finalização dentro da área</td><td>+1,0</td></tr>
+        <tr><td>Defesa de finalização fora da área</td><td>+0,5</td></tr>
+        <tr><td>Pênalti defendido</td><td>+5,0</td></tr>
+      </tbody>
+    </table>
+    <p>Pênalti defendido vale +5,0 e não conta também como defesa dentro da área.</p>
+    <p>Quando o Náutico termina a partida sem sofrer gol, todo goleiro e defensor que entrou em campo ganha +2,0 pontos. Um gol contra conta como gol sofrido e derruba o clean sheet.</p>
+  </details>
+
+  <details>
+    <summary>Valorização</summary>
+    <p>O jogador é comparado com o próprio valor atual. A cada ponto acima, ganha 0,1 PC; a cada ponto abaixo, perde 0,1 PC. Um jogador de 4 PC que faz 5,5 pontos passa a valer 4,15 PC.</p>
+    <p>Quem fica no banco a partida inteira faz 0,0 ponto e não muda de valor. Nenhum jogador passa de 12 PC nem cai abaixo de 1 PC.</p>
+  </details>
+
+  <details>
+    <summary>Mercado e ranking</summary>
+    <p>Você compra e vende enquanto o mercado está aberto. A venda devolve o valor atual do jogador, e as moedas que sobram ficam guardadas para as próximas rodadas.</p>
+    <p>Se você não mexer no time, a escalação da rodada anterior é mantida. Se a CBF adiar o jogo, o mercado reabre e fecha 24 horas antes da nova data.</p>
+    <p>O ranking soma os pontos de todas as rodadas. Empate que precise ser decidido vai para sorteio.</p>
+  </details>
+</section>
+
+{% endblock %}

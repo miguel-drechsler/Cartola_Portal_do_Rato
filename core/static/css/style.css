@@ -1,0 +1,357 @@
+/* Cartola Náutico — Portal do Rato
+   Paleta: vinho de arquibancada, vermelho do manto, branco das listras. */
+
+:root {
+  --vinho: #4E080D;
+  --vinho-fundo: #3A050A;
+  --vermelho: #E0161F;
+  --vermelho-escuro: #B5111A;
+  --branco: #FFFFFF;
+  --creme: #F2E4E2;
+  --creme-fraco: #C9A9A7;
+  --verde-ok: #1F7A4D;
+  --borda: rgba(255, 255, 255, 0.16);
+  --raio: 10px;
+  --sombra: 0 12px 30px rgba(0, 0, 0, 0.35);
+  /* Listras do manto: usada no topo e no campo. */
+  --listras: repeating-linear-gradient(
+    90deg,
+    var(--vermelho) 0 22px,
+    var(--branco) 22px 44px
+  );
+}
+
+* { box-sizing: border-box; }
+
+body {
+  margin: 0;
+  background: var(--vinho-fundo);
+  color: var(--creme);
+  font-family: "DM Sans", system-ui, -apple-system, sans-serif;
+  font-size: 17px;
+  line-height: 1.6;
+}
+
+h1, h2, h3, .saldo-numero, .posicao {
+  font-family: "Barlow Condensed", "DM Sans", sans-serif;
+  font-weight: 700;
+  letter-spacing: 0.01em;
+  line-height: 1.1;
+  color: var(--branco);
+  margin: 0 0 0.4em;
+}
+
+h1 { font-size: clamp(2rem, 5vw, 3.2rem); }
+h2 { font-size: clamp(1.5rem, 3vw, 2rem); }
+
+p { max-width: 62ch; }
+a { color: var(--branco); }
+
+.pular {
+  position: absolute;
+  left: -999px;
+}
+.pular:focus {
+  left: 1rem;
+  top: 1rem;
+  z-index: 10;
+  background: var(--branco);
+  color: var(--vinho);
+  padding: 0.5rem 1rem;
+  border-radius: var(--raio);
+}
+
+:focus-visible {
+  outline: 3px solid var(--branco);
+  outline-offset: 2px;
+}
+
+/* ---------- topo ---------- */
+
+.topo {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: center;
+  justify-content: space-between;
+  padding: 0.9rem clamp(1rem, 5vw, 3rem);
+  background: var(--vinho);
+  border-bottom: 4px solid transparent;
+  border-image: var(--listras) 1;
+}
+
+.marca {
+  display: flex;
+  align-items: center;
+  gap: 0.6rem;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 1.5rem;
+  font-weight: 700;
+  text-decoration: none;
+}
+
+.menu {
+  display: flex;
+  align-items: center;
+  gap: 1.2rem;
+}
+.menu a { text-decoration: none; }
+.menu a:hover { text-decoration: underline; }
+
+.sair button {
+  background: none;
+  border: 0;
+  color: var(--creme-fraco);
+  font: inherit;
+  cursor: pointer;
+  padding: 0;
+}
+
+/* ---------- botões ---------- */
+
+.botao {
+  display: inline-block;
+  background: var(--vermelho);
+  color: var(--branco);
+  border: 2px solid var(--vermelho);
+  border-radius: var(--raio);
+  padding: 0.7rem 1.5rem;
+  font: 600 1rem "DM Sans", sans-serif;
+  text-decoration: none;
+  cursor: pointer;
+}
+.botao:hover { background: var(--vermelho-escuro); border-color: var(--vermelho-escuro); }
+.botao:disabled { opacity: 0.45; cursor: not-allowed; }
+
+.botao-vazado { background: transparent; border-color: var(--borda); }
+.botao-vazado:hover { background: rgba(255, 255, 255, 0.08); border-color: var(--branco); }
+.botao-menu { padding: 0.45rem 1rem; }
+
+/* ---------- avisos ---------- */
+
+.avisos { list-style: none; margin: 0; padding: 0.8rem clamp(1rem, 5vw, 3rem) 0; }
+.aviso {
+  padding: 0.7rem 1rem;
+  border-radius: var(--raio);
+  border-left: 4px solid var(--branco);
+  background: rgba(255, 255, 255, 0.1);
+}
+.aviso-success { border-left-color: var(--verde-ok); }
+.aviso-error { border-left-color: var(--vermelho); }
+
+main { padding: clamp(1.5rem, 5vw, 3rem); max-width: 1000px; margin: 0 auto; }
+
+/* ---------- capa ---------- */
+
+.capa {
+  display: flex;
+  flex-wrap: wrap-reverse;
+  align-items: center;
+  justify-content: space-between;
+  gap: 2rem;
+  margin-bottom: 3.5rem;
+}
+.capa-texto { flex: 1 1 22rem; }
+.capa-escudo { flex: 0 0 auto; width: min(260px, 55vw); height: auto; }
+.linha-fina { color: var(--creme-fraco); font-size: 1.1rem; }
+.capa-acoes { display: flex; flex-wrap: wrap; gap: 0.8rem; margin-top: 1.5rem; }
+.proxima-rodada {
+  margin-top: 1.5rem;
+  padding-top: 1rem;
+  border-top: 1px solid var(--borda);
+  color: var(--creme-fraco);
+  font-size: 0.95rem;
+}
+
+/* ---------- regras ---------- */
+
+.regras-resumo {
+  display: grid;
+  grid-template-columns: repeat(auto-fit, minmax(11rem, 1fr));
+  gap: 1px;
+  background: var(--borda);
+  border: 1px solid var(--borda);
+  margin-bottom: 2rem;
+}
+.regras-resumo div { background: var(--vinho); padding: 1.1rem; }
+.regras-resumo strong {
+  display: block;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 1.5rem;
+  color: var(--branco);
+}
+.regras-resumo span { font-size: 0.92rem; color: var(--creme-fraco); }
+
+details { border-top: 1px solid var(--borda); padding: 0.4rem 0; }
+summary {
+  cursor: pointer;
+  padding: 0.7rem 0;
+  font-family: "Barlow Condensed", sans-serif;
+  font-size: 1.35rem;
+  color: var(--branco);
+}
+
+.tabela-pontos, .tabela-ranking { width: 100%; border-collapse: collapse; margin: 0.5rem 0 1rem; }
+.tabela-pontos caption { text-align: left; color: var(--creme-fraco); padding-bottom: 0.5rem; }
+.tabela-pontos td, .tabela-ranking td, .tabela-ranking th {
+  padding: 0.55rem 0.4rem;
+  border-bottom: 1px solid var(--borda);
+  text-align: left;
+}
+.tabela-pontos td:last-child { text-align: right; font-variant-numeric: tabular-nums; white-space: nowrap; }
+.negativo { color: #FF8A8A; }
+
+/* ---------- escalação ---------- */
+
+.painel {
+  display: flex;
+  flex-wrap: wrap;
+  gap: 1rem;
+  align-items: flex-end;
+  justify-content: space-between;
+  border-bottom: 1px solid var(--borda);
+  padding-bottom: 1rem;
+}
+.painel p { color: var(--creme-fraco); margin: 0; }
+.saldo { text-align: right; }
+.saldo-numero { display: block; font-size: 2.6rem; color: var(--branco); font-variant-numeric: tabular-nums; }
+.saldo-rotulo { font-size: 0.85rem; color: var(--creme-fraco); }
+.saldo.estourado .saldo-numero { color: #FF8A8A; }
+
+.prazo { color: var(--creme-fraco); font-size: 0.95rem; }
+.prazo-fechado { color: var(--branco); }
+
+.campo {
+  position: relative;
+  display: grid;
+  gap: clamp(0.6rem, 3vw, 1.4rem);
+  padding: clamp(1rem, 4vw, 2rem) 1rem;
+  margin: 1.5rem 0;
+  border: 3px solid var(--branco);
+  border-radius: var(--raio);
+  background:
+    repeating-linear-gradient(
+      90deg,
+      rgba(255, 255, 255, 0.06) 0 28px,
+      transparent 28px 56px
+    ),
+    var(--vermelho);
+}
+.campo::after {
+  content: "";
+  position: absolute;
+  inset: 22% 12% auto;
+  height: 0;
+  border-top: 2px solid rgba(255, 255, 255, 0.5);
+}
+.linha { display: flex; justify-content: center; gap: clamp(1rem, 8vw, 4rem); }
+
+.vaga {
+  width: clamp(88px, 24vw, 118px);
+  height: clamp(88px, 24vw, 118px);
+  border-radius: 50%;
+  border: 2px solid var(--branco);
+  background: rgba(58, 5, 10, 0.55);
+  color: var(--branco);
+  font: 600 0.85rem "DM Sans", sans-serif;
+  line-height: 1.25;
+  cursor: pointer;
+  padding: 0.4rem;
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  justify-content: center;
+  gap: 0.15rem;
+}
+.vaga:hover { background: rgba(58, 5, 10, 0.8); }
+.vaga:disabled { cursor: default; }
+.vaga .rotulo { font-family: "Barlow Condensed", sans-serif; font-size: 1.1rem; letter-spacing: 0.04em; }
+.vaga .nome { font-size: 0.82rem; overflow-wrap: anywhere; }
+.vaga .preco { font-size: 0.78rem; color: var(--creme); font-variant-numeric: tabular-nums; }
+.vaga .alerta { font-size: 0.95rem; }
+.vaga.ocupada { background: var(--vinho); }
+
+.acoes-time { display: flex; gap: 0.8rem; flex-wrap: wrap; }
+
+/* ---------- seletor de jogadores ---------- */
+
+dialog {
+  width: min(520px, 92vw);
+  border: 1px solid var(--borda);
+  border-radius: var(--raio);
+  background: var(--vinho);
+  color: var(--creme);
+  padding: 0;
+  box-shadow: var(--sombra);
+}
+dialog::backdrop { background: rgba(20, 2, 4, 0.75); }
+.seletor-topo {
+  display: flex;
+  align-items: center;
+  justify-content: space-between;
+  gap: 1rem;
+  padding: 1rem 1.2rem;
+  border-bottom: 1px solid var(--borda);
+}
+.seletor-topo h2 { margin: 0; }
+.fechar { background: none; border: 0; color: var(--creme); font-size: 1.6rem; cursor: pointer; line-height: 1; }
+
+.lista-jogadores { list-style: none; margin: 0; padding: 0; max-height: 60vh; overflow-y: auto; }
+.lista-jogadores li { border-bottom: 1px solid var(--borda); }
+.lista-jogadores button {
+  width: 100%;
+  display: flex;
+  align-items: baseline;
+  justify-content: space-between;
+  gap: 0.8rem;
+  padding: 0.85rem 1.2rem;
+  background: none;
+  border: 0;
+  color: inherit;
+  font: inherit;
+  text-align: left;
+  cursor: pointer;
+}
+.lista-jogadores button:hover:not(:disabled) { background: rgba(255, 255, 255, 0.08); }
+.lista-jogadores button:disabled { opacity: 0.4; cursor: not-allowed; }
+.jogador-info { display: flex; flex-direction: column; }
+.jogador-status { font-size: 0.82rem; color: var(--creme-fraco); }
+.jogador-status.duvida { color: #F2C14E; }
+.jogador-status.lesionado, .jogador-status.suspenso { color: #FF8A8A; }
+.jogador-preco { font-variant-numeric: tabular-nums; white-space: nowrap; }
+
+/* ---------- ranking e formulários ---------- */
+
+.tabela-ranking th { color: var(--creme-fraco); font-weight: 500; font-size: 0.9rem; }
+.tabela-ranking .posicao { width: 4rem; font-size: 1.2rem; }
+.tabela-ranking .pontos { text-align: right; font-variant-numeric: tabular-nums; }
+.tabela-ranking .eu { background: rgba(224, 22, 31, 0.22); }
+
+.formulario-caixa { max-width: 30rem; }
+.formulario-caixa label { display: block; font-weight: 500; margin-bottom: 0.2rem; }
+.formulario-caixa input {
+  width: 100%;
+  padding: 0.6rem 0.7rem;
+  border-radius: var(--raio);
+  border: 1px solid var(--borda);
+  background: var(--vinho);
+  color: var(--branco);
+  font: inherit;
+}
+.formulario-caixa .helptext, .formulario-caixa ul { font-size: 0.85rem; color: var(--creme-fraco); }
+.formulario-caixa .errorlist { color: #FF8A8A; list-style: none; padding: 0; }
+
+.vazio { color: var(--creme-fraco); }
+.miudo { font-size: 0.88rem; color: var(--creme-fraco); }
+
+.rodape {
+  border-top: 1px solid var(--borda);
+  padding: 2rem clamp(1rem, 5vw, 3rem);
+  color: var(--creme-fraco);
+  font-size: 0.9rem;
+}
+.rodape p { margin: 0.2rem 0; }
+
+@media (prefers-reduced-motion: reduce) {
+  * { transition: none !important; animation: none !important; }
+}

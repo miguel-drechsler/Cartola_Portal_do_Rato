@@ -1,0 +1,49 @@
+{% load static %}<!doctype html>
+<html lang="pt-BR">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1">
+<title>{% block titulo %}Cartola Náutico{% endblock %}</title>
+<link rel="preconnect" href="https://fonts.googleapis.com">
+<link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+<link href="https://fonts.googleapis.com/css2?family=Barlow+Condensed:wght@500;600;700&family=DM+Sans:wght@400;500;700&display=swap" rel="stylesheet">
+<link rel="stylesheet" href="{% static 'css/style.css' %}">
+<link rel="icon" href="{% static 'img/logo-portal-do-rato.png' %}">
+</head>
+<body>
+<a class="pular" href="#conteudo">Pular para o conteúdo</a>
+
+<header class="topo">
+  <a class="marca" href="{% url 'home' %}">
+    <img src="{% static 'img/logo-portal-do-rato.png' %}" alt="Portal do Rato" width="44" height="44">
+    <span>Cartola Náutico</span>
+  </a>
+  <nav class="menu">
+    <a href="{% url 'ranking' %}">Ranking</a>
+    {% if user.is_authenticated %}
+      <a href="{% url 'escalacao' %}">Meu time</a>
+      <form method="post" action="{% url 'logout' %}" class="sair">
+        {% csrf_token %}<button type="submit">Sair</button>
+      </form>
+    {% else %}
+      <a href="{% url 'login' %}">Entrar</a>
+      <a class="botao botao-menu" href="{% url 'cadastro' %}">Criar conta</a>
+    {% endif %}
+  </nav>
+</header>
+
+{% if messages %}
+<ul class="avisos">
+  {% for message in messages %}<li class="aviso aviso-{{ message.tags }}">{{ message }}</li>{% endfor %}
+</ul>
+{% endif %}
+
+<main id="conteudo">{% block conteudo %}{% endblock %}</main>
+
+<footer class="rodape">
+  <p>Cartola Náutico — o Cartola 100% alvirrubro, do Portal do Rato.</p>
+  <p class="miudo">Jogo de torcedor, sem vínculo oficial com o Clube Náutico Capibaribe.</p>
+</footer>
+{% block scripts %}{% endblock %}
+</body>
+</html>

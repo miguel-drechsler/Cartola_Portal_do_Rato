@@ -1,0 +1,14 @@
+{% extends "base.html" %}
+{% block titulo %}Criar conta — Cartola Náutico{% endblock %}
+{% block conteudo %}
+<section class="formulario-caixa">
+  <h1>Criar conta</h1>
+  <p class="linha-fina">Você começa com 30 Portal Coins para montar o primeiro time.</p>
+  <form method="post" novalidate>
+    {% csrf_token %}
+    {{ formulario.as_p }}
+    <button type="submit" class="botao">Criar conta</button>
+  </form>
+  <p class="miudo">Já tem conta? <a href="{% url 'login' %}">Entrar</a></p>
+</section>
+{% endblock %}

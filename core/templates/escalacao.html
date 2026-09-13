@@ -1,0 +1,71 @@
+{% extends "base.html" %}{% load static %}
+{% block titulo %}Meu time — Cartola Náutico{% endblock %}
+{% block conteudo %}
+
+{% if not rodada %}
+  <p class="vazio">Nenhuma rodada aberta no momento. Assim que o próximo jogo do Náutico for cadastrado, o mercado abre por aqui.</p>
+{% else %}
+
+<section class="escalacao">
+  <header class="painel">
+    <div>
+      <h1>Rodada {{ rodada.numero }}</h1>
+      <p>Náutico x {{ rodada.adversario }} · {{ rodada.data_jogo|date:"d/m \à\s H:i" }}</p>
+    </div>
+    <div class="saldo">
+      <span class="saldo-numero" id="saldo">{{ patrimonio|floatformat:2 }}</span>
+      <span class="saldo-rotulo">Portal Coins disponíveis</span>
+    </div>
+  </header>
+
+  {% if mercado_aberto %}
+    <p class="prazo">O mercado fecha {{ rodada.fechamento_mercado|date:"d/m \à\s H:i" }}.</p>
+  {% else %}
+    <p class="prazo prazo-fechado">Mercado fechado. Seu time está confirmado para esta rodada.</p>
+  {% endif %}
+
+  <form method="post" id="formulario-time">
+    {% csrf_token %}
+    <div class="campo" role="group" aria-label="Seu time em campo">
+      <div class="linha linha-ata">
+        <button type="button" class="vaga" data-posicao="ATA" data-vaga="ata1"></button>
+        <button type="button" class="vaga" data-posicao="ATA" data-vaga="ata2"></button>
+      </div>
+      <div class="linha linha-mei">
+        <button type="button" class="vaga" data-posicao="MEI" data-vaga="mei1"></button>
+      </div>
+      <div class="linha linha-def">
+        <button type="button" class="vaga" data-posicao="DEF" data-vaga="def1"></button>
+        <button type="button" class="vaga" data-posicao="DEF" data-vaga="def2"></button>
+      </div>
+      <div class="linha linha-gol">
+        <button type="button" class="vaga" data-posicao="GOL" data-vaga="gol1"></button>
+      </div>
+    </div>
+
+    <div class="acoes-time">
+      <button type="submit" class="botao" id="salvar" {% if not mercado_aberto %}disabled{% endif %}>Salvar time</button>
+      <button type="button" class="botao botao-vazado" id="limpar" {% if not mercado_aberto %}disabled{% endif %}>Limpar</button>
+    </div>
+    <div id="campos-ocultos"></div>
+  </form>
+</section>
+
+<dialog id="seletor">
+  <form method="dialog" class="seletor-topo">
+    <h2 id="seletor-titulo">Escolher jogador</h2>
+    <button class="fechar" aria-label="Fechar">×</button>
+  </form>
+  <ul id="lista-jogadores" class="lista-jogadores"></ul>
+</dialog>
+
+{{ jogadores_json|json_script:"dados-jogadores" }}
+{{ escalados_json|json_script:"dados-escalados" }}
+{% endif %}
+{% endblock %}
+
+{% block scripts %}
+{% if rodada %}
+<script src="{% static 'js/escalacao.js' %}" data-mercado-aberto="{{ mercado_aberto|yesno:'1,0' }}" data-patrimonio="{{ patrimonio|floatformat:2 }}"></script>
+{% endif %}
+{% endblock %}
