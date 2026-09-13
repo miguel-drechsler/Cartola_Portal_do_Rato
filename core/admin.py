@@ -16,6 +16,23 @@ class JogadorAdmin(admin.ModelAdmin):
     list_filter = ("posicao", "status", "no_elenco")
     list_editable = ("valor", "status", "no_elenco")
     search_fields = ("nome", "apelidos")
+    fieldsets = (
+        (None, {"fields": ("nome", "posicao", "valor", "no_elenco")}),
+        (
+            "Situação para a próxima rodada",
+            {"fields": ("status", "noticia_url", "apelidos")},
+        ),
+        (
+            "API-Football",
+            {
+                "classes": ("collapse",),
+                "description": "Preenchido pelo comando "
+                "<code>sincronizar_api elenco</code>. Só mexa aqui se o "
+                "jogador não casou pelo nome.",
+                "fields": ("api_id",),
+            },
+        ),
+    )
 
 
 @admin.register(Rodada)
@@ -31,6 +48,23 @@ class RodadaAdmin(admin.ModelAdmin):
     )
     list_filter = ("processada",)
     actions = ("acao_criar_fichas", "acao_importar_scouts", "acao_processar")
+    fieldsets = (
+        (None, {"fields": ("numero", "adversario", "mando", "data_jogo")}),
+        (
+            "Depois do jogo",
+            {"fields": ("gols_sofridos", "processada")},
+        ),
+        (
+            "API-Football",
+            {
+                "classes": ("collapse",),
+                "description": "Deixe em branco. O comando "
+                "<code>sincronizar_api rodada</code> cria a rodada já com este "
+                "campo preenchido.",
+                "fields": ("api_fixture_id",),
+            },
+        ),
+    )
 
     @admin.display(boolean=True, description="mercado aberto")
     def mercado_aberto(self, rodada):

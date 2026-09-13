@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Le o arquivo .env, se existir. E onde ficam a chave secreta e a chave da API,
 # fora do codigo e fora do GitHub. Sem o arquivo, tudo continua funcionando.
 try:
-    from dotenv import load_dotenv  # type: ignore[reportMissingImports]
+    from dotenv import load_dotenv
 
     load_dotenv(BASE_DIR / ".env")
 except ImportError:

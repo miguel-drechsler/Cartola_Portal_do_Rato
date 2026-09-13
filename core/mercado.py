@@ -126,6 +126,22 @@ def processar_rodada(rodada):
     return rodada
 
 
+def herdar_escalacoes(rodada_nova):
+    """Copia os times da ultima rodada processada para a rodada recem-criada.
+
+    Junto com a copia feita no processamento, isso garante que a ordem em que
+    voce cria e processa as rodadas nao muda nada.
+    """
+    anterior = (
+        Rodada.objects.filter(processada=True, numero__lt=rodada_nova.numero)
+        .order_by("-numero")
+        .first()
+    )
+    if anterior is None:
+        return 0
+    return replicar_escalacoes(anterior, rodada_nova)
+
+
 def criar_fichas_de_scout(rodada):
     """Cria uma ficha em branco para cada jogador do elenco."""
     criadas = 0

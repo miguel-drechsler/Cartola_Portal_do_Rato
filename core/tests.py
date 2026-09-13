@@ -342,3 +342,32 @@ class TestTelas(BaseComElenco):
 
     def test_ranking_abre(self):
         self.assertEqual(self.client.get("/ranking/").status_code, 200)
+
+
+class TestHerancaDeEscalacao(BaseComElenco):
+    """A ordem entre criar a proxima rodada e processar a atual nao importa."""
+
+    def test_rodada_criada_depois_do_processamento_herda_o_time(self):
+        mercado.salvar_escalacao(self.usuario, self.rodada, self.time_padrao())
+        self.rodada.gols_sofridos = 1
+        self.rodada.save()
+        mercado.processar_rodada(self.rodada)
+
+        proxima = Rodada.objects.create(
+            numero=2, adversario="Ceará", data_jogo=timezone.now() + timedelta(days=10)
+        )
+        nova = Escalacao.objects.get(usuario=self.usuario, rodada=proxima)
+        self.assertEqual(nova.jogadores.count(), 6)
+
+    def test_nao_duplica_quando_as_duas_copias_acontecem(self):
+        proxima = Rodada.objects.create(
+            numero=2, adversario="Ceará", data_jogo=timezone.now() + timedelta(days=10)
+        )
+        mercado.salvar_escalacao(self.usuario, self.rodada, self.time_padrao())
+        self.rodada.gols_sofridos = 0
+        self.rodada.save()
+        mercado.processar_rodada(self.rodada)
+
+        self.assertEqual(
+            Escalacao.objects.filter(usuario=self.usuario, rodada=proxima).count(), 1
+        )

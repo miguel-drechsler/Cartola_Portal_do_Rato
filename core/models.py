@@ -119,6 +119,14 @@ class Rodada(models.Model):
         return cls.objects.filter(processada=False).order_by("numero").first()
 
 
+@receiver(post_save, sender=Rodada)
+def herdar_times_da_rodada_anterior(sender, instance, created, **kwargs):
+    if created:
+        from . import mercado
+
+        mercado.herdar_escalacoes(instance)
+
+
 class Perfil(models.Model):
     usuario = models.OneToOneField(
         settings.AUTH_USER_MODEL, on_delete=models.CASCADE, related_name="perfil"
