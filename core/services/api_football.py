@@ -78,6 +78,17 @@ def traduzir_estatisticas(estatisticas):
     no_gol = numero(chutes.get("on"))
     total = numero(chutes.get("total"))
 
+    # A API nao diz se a expulsao foi por segundo amarelo ou vermelho direto.
+    # Nao faz diferenca na pontuacao: com amarelo antes, a secao 5 manda -3 nos
+    # dois casos. So o vermelho direto sem amarelo vale -2.
+    amarelos = min(numero(cartoes.get("yellow")), 2)
+    if numero(cartoes.get("red")) == 0:
+        vermelho = "nenhum"
+    elif amarelos >= 2:
+        vermelho = "segundo_amarelo"
+    else:
+        vermelho = "direto"
+
     return {
         "entrou_em_campo": numero(jogo.get("minutes")) > 0,
         "gols": numero(gols.get("total")),
@@ -94,7 +105,8 @@ def traduzir_estatisticas(estatisticas):
         "penaltis_cometidos": numero(penaltis.get("commited")),  # erro de grafia da propria API
         "penaltis_perdidos": numero(penaltis.get("missed")),
         "penaltis_defendidos": numero(penaltis.get("saved")),
-        "cartoes_amarelos": min(numero(cartoes.get("yellow")), 2),
+        "cartoes_amarelos": amarelos,
+        "cartao_vermelho": vermelho,
         # A API nao separa as defesas por area: tudo entra como defesa de dentro
         # e o admin corrige o que foi de fora.
         "defesas_dentro_area": numero(gols.get("saves")),
@@ -111,3 +123,23 @@ def scouts_da_partida(id_da_partida, id_do_time):
             estatisticas = item["statistics"][0] if item.get("statistics") else {}
             resultado[item["player"]["id"]] = traduzir_estatisticas(estatisticas)
     return resultado
+
+
+def proximo_jogo(id_do_time):
+    """Proxima partida do time, com ID, data e adversario."""
+    resposta = chamar("fixtures", team=id_do_time, next=1, timezone="America/Recife")
+    return resposta[0] if resposta else None
+
+
+def partida(id_da_partida):
+    """Dados de uma partida especifica, incluindo o placar."""
+    resposta = chamar("fixtures", id=id_da_partida, timezone="America/Recife")
+    return resposta[0] if resposta else None
+
+
+def gols_sofridos(dados_da_partida, id_do_time):
+    """Quantos gols o time levou. E o que define o clean sheet (secao 9)."""
+    gols = dados_da_partida["goals"]
+    em_casa = dados_da_partida["teams"]["home"]["id"] == id_do_time
+    sofridos = gols["away"] if em_casa else gols["home"]
+    return None if sofridos is None else int(sofridos)

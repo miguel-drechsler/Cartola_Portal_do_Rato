@@ -3,6 +3,7 @@ from django.core.exceptions import ValidationError
 
 from . import mercado
 from .models import Escalacao, Jogador, Perfil, Rodada, Scout
+from .services import api_football, importacao
 
 admin.site.site_header = "Cartola Náutico"
 admin.site.site_title = "Cartola Náutico"
@@ -29,7 +30,7 @@ class RodadaAdmin(admin.ModelAdmin):
         "processada",
     )
     list_filter = ("processada",)
-    actions = ("acao_criar_fichas", "acao_processar")
+    actions = ("acao_criar_fichas", "acao_importar_scouts", "acao_processar")
 
     @admin.display(boolean=True, description="mercado aberto")
     def mercado_aberto(self, rodada):
@@ -41,6 +42,28 @@ class RodadaAdmin(admin.ModelAdmin):
             criadas = mercado.criar_fichas_de_scout(rodada)
             self.message_user(
                 request, f"Rodada {rodada.numero}: {criadas} fichas criadas.", messages.SUCCESS
+            )
+
+    @admin.action(description="1b. Importar scouts da API-Football")
+    def acao_importar_scouts(self, request, queryset):
+        for rodada in queryset:
+            try:
+                preenchidos, ignorados, protegidos = importacao.importar_scouts(rodada)
+            except (importacao.ErroDeImportacao, api_football.ErroDaApi) as erro:
+                self.message_user(
+                    request, f"Rodada {rodada.numero}: {erro}", messages.ERROR
+                )
+                continue
+            recado = f"Rodada {rodada.numero}: {len(preenchidos)} fichas preenchidas."
+            if protegidos:
+                recado += f" Mantidas por já estarem conferidas: {', '.join(protegidos)}."
+            if ignorados:
+                recado += f" {len(ignorados)} jogadores da API sem cadastro aqui."
+            self.message_user(request, recado, messages.SUCCESS)
+            self.message_user(
+                request,
+                "Confira os scouts e marque como conferido antes de processar.",
+                messages.WARNING,
             )
 
     @admin.action(description="2. Processar rodada (pontua e valoriza)")

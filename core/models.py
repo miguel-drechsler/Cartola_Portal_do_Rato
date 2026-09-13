@@ -92,7 +92,11 @@ class Rodada(models.Model):
     )
     processada = models.BooleanField(default=False)
     api_fixture_id = models.PositiveIntegerField(
-        "ID da partida na API-Football", null=True, blank=True
+        "ID da partida na API-Football",
+        null=True,
+        blank=True,
+        help_text="Opcional. Deixe em branco se você preenche os scouts à mão. "
+        "Só é usado para importar os scouts da API.",
     )
 
     class Meta:

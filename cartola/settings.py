@@ -104,3 +104,5 @@ if not DEBUG:
 
 # Chave da API-Football (opcional). Ver core/services/api_football.py.
 API_FOOTBALL_KEY = os.environ.get("API_FOOTBALL_KEY", "")
+# ID do Nautico na API-Football. Pegue no dashboard, em Apis > Football > Ids > Teams.
+API_FOOTBALL_TEAM_ID = os.environ.get("API_FOOTBALL_TEAM_ID", "")
