@@ -21,7 +21,7 @@ ELENCO = [
     ("Samuel", "MEI", "4"),
     ("Auremir", "MEI", "1"),
     ("Wenderson", "MEI", "8"),
-    ("Pato Nunes", "MEI", "2"),
+    ("Pato Núñez", "MEI", "2"),
     ("Caio Soares", "MEI", "1"),
     ("Hallanzinho", "MEI", "1"),
     ("Luiz Felipe", "MEI", "3"),
@@ -33,6 +33,9 @@ ELENCO = [
     ("Derek", "ATA", "4"),
     ("Kauã Maranhão", "ATA", "6"),
     ("Luiz Cláudio", "ATA", "4"),
+    ("Paulo Sergio", "ATA", "4"),
+    ("Victor Andrade", "ATA", "3"),
+    ("Everson Santos", "ATA", "1"),
 ]
 
 
