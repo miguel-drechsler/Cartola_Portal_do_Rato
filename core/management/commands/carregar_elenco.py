@@ -27,7 +27,7 @@ ELENCO = [
     ("Luiz Felipe", "MEI", "3"),
     ("Jean Carlos", "ATA", "8"),
     ("Júnior Todinho", "ATA", "3"),
-    ("Vinícius", "ATA", "6"),
+    ("Vinícius", "ATA", "8"),
     ("Benjamín Borasi", "ATA", "4"),
     ("Danielzinho", "ATA", "5"),
     ("Derek", "ATA", "4"),

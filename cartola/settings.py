@@ -7,7 +7,7 @@ BASE_DIR = Path(__file__).resolve().parent.parent
 # Le o arquivo .env, se existir. E onde ficam a chave secreta e a chave da API,
 # fora do codigo e fora do GitHub. Sem o arquivo, tudo continua funcionando.
 try:
-    from dotenv import load_dotenv  # type: ignore[reportMissingImports]
+    from dotenv import load_dotenv
 
     load_dotenv(BASE_DIR / ".env")
 except ImportError:
@@ -35,8 +35,6 @@ INSTALLED_APPS = [
 
 MIDDLEWARE = [
     "django.middleware.security.SecurityMiddleware",
-    # Serve CSS, JS e imagens sem precisar configurar servidor de arquivos.
-    "whitenoise.middleware.WhiteNoiseMiddleware",
     "django.contrib.sessions.middleware.SessionMiddleware",
     "django.middleware.common.CommonMiddleware",
     "django.middleware.csrf.CsrfViewMiddleware",
@@ -44,6 +42,12 @@ MIDDLEWARE = [
     "django.contrib.messages.middleware.MessageMiddleware",
     "django.middleware.clickjacking.XFrameOptionsMiddleware",
 ]
+
+# Em producao, o WhiteNoise serve CSS, JS e imagens sem servidor de arquivos.
+# Em desenvolvimento ele fica de fora: senao uma pasta staticfiles/ antiga
+# passa na frente do arquivo que voce esta editando.
+if not DEBUG:
+    MIDDLEWARE.insert(1, "whitenoise.middleware.WhiteNoiseMiddleware")
 
 ROOT_URLCONF = "cartola.urls"
 
