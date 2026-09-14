@@ -69,3 +69,5 @@ conferir os nomes dos campos antes de confiar na importação.
 Três scouts continuam manuais porque a API não entrega: bola na trave, a divisão
 das defesas entre dentro e fora da área, e os pênaltis sofridos e defendidos,
 que costumam vir vazios fora das ligas grandes.
+
+## Observação: Esse projeto teve o auxilio de IA para organização do código, aplicação da API-Football e estrutura do SQLite.
