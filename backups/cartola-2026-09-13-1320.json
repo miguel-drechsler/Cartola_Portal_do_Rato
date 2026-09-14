@@ -1,0 +1,564 @@
+[
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$aWqITmioHh20zoIhyLGWQL$6qfR82drWmK4FSMm4hTRw6xT10VPGSCuLbc9wYAT2po=",
+    "last_login": "2026-09-13T02:16:51.544Z",
+    "is_superuser": false,
+    "username": "Miguel_ADM",
+    "first_name": "",
+    "last_name": "",
+    "email": "miguel.drechsler9990@gmail.com",
+    "is_staff": false,
+    "is_active": true,
+    "date_joined": "2026-09-13T02:16:51.117Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$Dhgi1t161AXgpSlQQN2R31$YpogDaq3q2Np90HSvaQYuDxD3lECwit+3vOXlEWFsiU=",
+    "last_login": "2026-09-13T02:23:20Z",
+    "is_superuser": true,
+    "username": "Miguel_Adm",
+    "first_name": "",
+    "last_name": "",
+    "email": "miguel.drechsler@gmail.com",
+    "is_staff": true,
+    "is_active": false,
+    "date_joined": "2026-09-13T02:21:36Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "auth.user",
+  "fields": {
+    "password": "pbkdf2_sha256$1500000$e3CXx7J7pdlomsMdPQZpPq$cKoNXMrxqYJ3+6CCMLUUFGEgq5YzZGyFI6FINopmy0I=",
+    "last_login": "2026-09-13T15:53:11.717Z",
+    "is_superuser": true,
+    "username": "Portal_ADM",
+    "first_name": "",
+    "last_name": "",
+    "email": "comunicacaodorato@gmail.com",
+    "is_staff": true,
+    "is_active": true,
+    "date_joined": "2026-09-13T15:52:37.211Z",
+    "groups": [],
+    "user_permissions": []
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 1,
+  "fields": {
+    "nome": "Muriel",
+    "posicao": "GOL",
+    "valor": "6.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 41227
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 2,
+  "fields": {
+    "nome": "Gastón Guruceaga",
+    "posicao": "GOL",
+    "valor": "2.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": null
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 3,
+  "fields": {
+    "nome": "Arnaldo",
+    "posicao": "DEF",
+    "valor": "4.00",
+    "status": "suspenso",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 9701
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 4,
+  "fields": {
+    "nome": "Reginaldo",
+    "posicao": "DEF",
+    "valor": "3.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 9313
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 5,
+  "fields": {
+    "nome": "Betão",
+    "posicao": "DEF",
+    "valor": "5.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 195388
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 6,
+  "fields": {
+    "nome": "Léo Índio",
+    "posicao": "DEF",
+    "valor": "6.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 306077
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 7,
+  "fields": {
+    "nome": "Gustavo Henrique",
+    "posicao": "DEF",
+    "valor": "3.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 419856
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 8,
+  "fields": {
+    "nome": "Wanderson",
+    "posicao": "DEF",
+    "valor": "2.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 53971
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 9,
+  "fields": {
+    "nome": "Mateus Silva",
+    "posicao": "DEF",
+    "valor": "2.00",
+    "status": "lesionado",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 152621
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 10,
+  "fields": {
+    "nome": "Igor Fernandes",
+    "posicao": "DEF",
+    "valor": "5.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 10519
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 11,
+  "fields": {
+    "nome": "Ryan",
+    "posicao": "DEF",
+    "valor": "3.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 288287
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 12,
+  "fields": {
+    "nome": "Riquelme",
+    "posicao": "DEF",
+    "valor": "1.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 638209
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 13,
+  "fields": {
+    "nome": "Samuel",
+    "posicao": "MEI",
+    "valor": "4.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 457556
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 14,
+  "fields": {
+    "nome": "Auremir",
+    "posicao": "MEI",
+    "valor": "1.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 78045
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 15,
+  "fields": {
+    "nome": "Wenderson",
+    "posicao": "MEI",
+    "valor": "8.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 10063
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 17,
+  "fields": {
+    "nome": "Caio Soares",
+    "posicao": "MEI",
+    "valor": "1.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 351705
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 18,
+  "fields": {
+    "nome": "Hallanzinho",
+    "posicao": "MEI",
+    "valor": "1.00",
+    "status": "duvida",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 506344
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 19,
+  "fields": {
+    "nome": "Luiz Felipe",
+    "posicao": "MEI",
+    "valor": "3.00",
+    "status": "duvida",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 166711
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 20,
+  "fields": {
+    "nome": "Jean Carlos",
+    "posicao": "ATA",
+    "valor": "8.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 77799
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 21,
+  "fields": {
+    "nome": "Júnior Todinho",
+    "posicao": "ATA",
+    "valor": "3.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 9262
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 22,
+  "fields": {
+    "nome": "Vinícius",
+    "posicao": "ATA",
+    "valor": "8.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 9660
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 24,
+  "fields": {
+    "nome": "Danielzinho",
+    "posicao": "ATA",
+    "valor": "5.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 576794
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 25,
+  "fields": {
+    "nome": "Derek",
+    "posicao": "ATA",
+    "valor": "4.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 157361
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 26,
+  "fields": {
+    "nome": "Kauã Maranhão",
+    "posicao": "ATA",
+    "valor": "6.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 352956
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 27,
+  "fields": {
+    "nome": "Luiz Cláudio",
+    "posicao": "ATA",
+    "valor": "4.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 454314
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 28,
+  "fields": {
+    "nome": "Paulo Sergio",
+    "posicao": "ATA",
+    "valor": "4.00",
+    "status": "duvida",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 53963
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 29,
+  "fields": {
+    "nome": "Victor Andrade",
+    "posicao": "ATA",
+    "valor": "3.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 10215
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 30,
+  "fields": {
+    "nome": "Everson Santos",
+    "posicao": "ATA",
+    "valor": "1.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": null
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 31,
+  "fields": {
+    "nome": "Pato Núñez",
+    "posicao": "MEI",
+    "valor": "2.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 302928
+  }
+},
+{
+  "model": "core.jogador",
+  "pk": 32,
+  "fields": {
+    "nome": "Benjamín Borasi",
+    "posicao": "ATA",
+    "valor": "4.00",
+    "status": "provavel",
+    "noticia_url": "",
+    "apelidos": "",
+    "no_elenco": true,
+    "api_id": 5183
+  }
+},
+{
+  "model": "core.rodada",
+  "pk": 1,
+  "fields": {
+    "numero": 28,
+    "adversario": "Operário-PR",
+    "mando": "casa",
+    "data_jogo": "2026-09-15T22:30:00Z",
+    "gols_sofridos": null,
+    "processada": false,
+    "api_fixture_id": null
+  }
+},
+{
+  "model": "core.perfil",
+  "pk": 1,
+  "fields": {
+    "usuario": [
+      "Miguel_ADM"
+    ],
+    "moedas": "30.00",
+    "pontos_total": "0.00",
+    "time_nome": "Los mamadores de Derek"
+  }
+},
+{
+  "model": "core.perfil",
+  "pk": 2,
+  "fields": {
+    "usuario": [
+      "Miguel_Adm"
+    ],
+    "moedas": "1.00",
+    "pontos_total": "0.00",
+    "time_nome": ""
+  }
+},
+{
+  "model": "core.perfil",
+  "pk": 3,
+  "fields": {
+    "usuario": [
+      "Portal_ADM"
+    ],
+    "moedas": "2.00",
+    "pontos_total": "0.00",
+    "time_nome": ""
+  }
+},
+{
+  "model": "core.escalacao",
+  "pk": 1,
+  "fields": {
+    "usuario": [
+      "Miguel_Adm"
+    ],
+    "rodada": 1,
+    "pontos": "0.00",
+    "custo": "29.00",
+    "criada_em": "2026-09-13T16:04:58.195Z",
+    "jogadores": [
+      20,
+      25,
+      3,
+      7,
+      1,
+      13
+    ]
+  }
+},
+{
+  "model": "core.escalacao",
+  "pk": 2,
+  "fields": {
+    "usuario": [
+      "Portal_ADM"
+    ],
+    "rodada": 1,
+    "pontos": "0.00",
+    "custo": "28.00",
+    "criada_em": "2026-09-13T16:04:50.103Z",
+    "jogadores": [
+      26,
+      25,
+      10,
+      7,
+      1,
+      13
+    ]
+  }
+}
+]
