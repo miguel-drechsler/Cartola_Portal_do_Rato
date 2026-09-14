@@ -16,7 +16,7 @@ source .venv/bin/activate          # Windows: .venv\Scripts\activate
 pip install -r requirements.txt
 
 python manage.py migrate
-python manage.py carregar_elenco   # cadastra os 27 jogadores com os valores das regras
+python manage.py carregar_elenco   # cadastra os 30 jogadores com os valores das regras
 python manage.py createsuperuser   # sua conta de administrador
 python manage.py runserver
 ```
